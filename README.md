@@ -1,4 +1,1 @@
-springDataMongoJpaTest
-======================
-
-my hello world at springData
+my hello world at spring Data  (Mongo, Jpa)
