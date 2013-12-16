@@ -2,6 +2,7 @@ package ru.testMongo.conf;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,6 +13,7 @@ import com.mongodb.MongoClient;
 
 @Configuration
 @EnableAutoConfiguration
+@ComponentScan(value = "ru.testMongo.repository")
 public class ConfigurationMongo extends AbstractMongoConfiguration {
 
 	@Override

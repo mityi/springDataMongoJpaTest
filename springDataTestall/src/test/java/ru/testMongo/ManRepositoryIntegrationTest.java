@@ -1,43 +1,38 @@
 package ru.testMongo;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import ru.testMongo.conf.ConfigurationMongo;
 import ru.testMongo.model.Man;
 import ru.testMongo.repository.ManRepository;
 
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
-public class Application implements CommandLineRunner {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ConfigurationMongo.class)
+public class ManRepositoryIntegrationTest extends Assert {
 
 	@Autowired
 	private ManRepository repository;
-	
+
 	@Autowired
-	MongoOperations mongoOperation;
+	private MongoOperations mongoOperation;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+	@Test
+	public void sampleTestCase() {
 
-	@Override
-	public void run(String... args) throws Exception {
-		
 		repository.deleteAll();
-		
+
 		Man man = new Man("foo");
 
 		mongoOperation.save(man);
@@ -62,9 +57,9 @@ public class Application implements CommandLineRunner {
 		mongoOperation.remove(searchNameFooBar, Man.class);
 		List<Man> list = mongoOperation.findAll(Man.class);
 		println("4.Delete " + list.size());
-		
-		
-		
+
+		assertEquals(list.size(), 0);
+
 		repository.deleteAll();
 
 		// save a couple of customers
@@ -84,12 +79,10 @@ public class Application implements CommandLineRunner {
 		for (Man customer : repository.findByNameNot("Bob")) {
 			println(customer);
 		}
-		
 
 	}
-	
+
 	public static void println(Object o) {
 		System.out.println(o);
 	}
-
 }

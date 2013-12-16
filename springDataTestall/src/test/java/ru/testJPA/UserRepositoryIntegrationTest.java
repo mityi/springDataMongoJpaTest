@@ -21,6 +21,7 @@ public class UserRepositoryIntegrationTest extends Assert {
 
 	@Test
 	public void sampleTestCase() {
+		repository.deleteAll();
 		String inf = "FFFFFF";
 		System.out.println(repository);
 		User fooBar = new User("FooBar", inf);
